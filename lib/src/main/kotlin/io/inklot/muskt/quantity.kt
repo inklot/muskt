@@ -11,7 +11,6 @@ sealed interface Measure
 
 interface Units<DimensionType : Dimension> : Measure
 interface Metres : Units<Length>
-interface Kilograms : Units<Mass>
 interface Seconds : Units<Time>
 
 fun <A : Measure> Number.to(): Quantity<A> {
@@ -26,27 +25,27 @@ interface Div<A: Measure, B: Measure>: BinOp<A, B>
 value class Quantity<out Units : Measure>(val double: Double)
 
 operator fun <A: Measure> Quantity<A>.plus(that: Quantity<A>): Quantity<A> {
-    return Quantity<A>(this.double + that.double)
+    return Quantity(this.double + that.double)
 }
 
 operator fun <A: Measure> Quantity<A>.minus(that: Quantity<A>): Quantity<A> {
-    return Quantity<A>(this.double - that.double)
+    return Quantity(this.double - that.double)
 }
 
 operator fun <A: Measure, B: Measure> Quantity<A>.times(that: Quantity<B>): Quantity<Mul<A, B>> {
-    return Quantity<Mul<A, B>>(this.double * that.double)
+    return Quantity(this.double * that.double)
 }
 
 operator fun <A: Measure, B: Measure> Quantity<A>.div(that: Quantity<B>): Quantity<Div<A, B>> {
-    return Quantity<Div<A, B>>(this.double / that.double)
+    return Quantity(this.double / that.double)
 }
 
 fun <A: Measure> Quantity<A>.pow(i: Int): Quantity<Mul<A, A>> {
     val double1 = this.double.pow(i)
-    return Quantity<Mul<A, A>>(double1)
+    return Quantity(double1)
 }
 
 fun <A: Measure> Quantity<A>.pow(i: Double): Quantity<Mul<A, A>> {
     val double1 = this.double.pow(i)
-    return Quantity<Mul<A, A>>(double1)
+    return Quantity(double1)
 }
