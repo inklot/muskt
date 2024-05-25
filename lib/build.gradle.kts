@@ -17,12 +17,6 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
-
-mavenPublishing {
-    publishToMavenCentral(SonatypeHost.DEFAULT)
-    signAllPublications()
-}
-
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
