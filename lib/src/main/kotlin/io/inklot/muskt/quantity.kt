@@ -13,39 +13,25 @@ interface Units<DimensionType : Dimension> : Measure
 interface Metres : Units<Length>
 interface Seconds : Units<Time>
 
-fun <A : Measure> Number.to(): Quantity<A> {
-    return Quantity<A>(this.toDouble())
+fun <Power: Nat<*>, A : Measure> Number.to(): Quantity<Power, A> {
+    return Quantity<Power, A>(this.toDouble())
 }
 
-interface BinOp<A: Measure, B: Measure>: Measure
-interface Mul<A: Measure, B: Measure>: BinOp<A, B>
-interface Div<A: Measure, B: Measure>: BinOp<A, B>
-
 @JvmInline
-value class Quantity<out Units : Measure>(val double: Double)
+value class Quantity<Power: Nat<*>, Units : Measure>(val double: Double)
 
-operator fun <A: Measure> Quantity<A>.plus(that: Quantity<A>): Quantity<A> {
+operator fun <Power: Nat<*>, A : Measure> Quantity<Power, A>.plus(that: Quantity<Power, A>): Quantity<Power, A> {
     return Quantity(this.double + that.double)
 }
 
-operator fun <A: Measure> Quantity<A>.minus(that: Quantity<A>): Quantity<A> {
+operator fun <Power: Nat<*>, A : Measure> Quantity<Power, A>.minus(that: Quantity<Power, A>): Quantity<Power, A> {
     return Quantity(this.double - that.double)
 }
 
-operator fun <A: Measure, B: Measure> Quantity<A>.times(that: Quantity<B>): Quantity<Mul<A, B>> {
+operator fun <Power: Nat<*>, A: Measure> Quantity<Power, A>.times(that: Quantity<Power, A>): Quantity<S<Power>, A> {
     return Quantity(this.double * that.double)
 }
 
-operator fun <A: Measure, B: Measure> Quantity<A>.div(that: Quantity<B>): Quantity<Div<A, B>> {
+operator fun <X: Nat<*>, Power: S<X>, A: Measure> Quantity<Power, A>.div(that: Quantity<Power, A>): Quantity<X, A> {
     return Quantity(this.double / that.double)
-}
-
-fun <A: Measure> Quantity<A>.pow(i: Int): Quantity<Mul<A, A>> {
-    val double1 = this.double.pow(i)
-    return Quantity(double1)
-}
-
-fun <A: Measure> Quantity<A>.pow(i: Double): Quantity<Mul<A, A>> {
-    val double1 = this.double.pow(i)
-    return Quantity(double1)
 }

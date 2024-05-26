@@ -5,38 +5,28 @@ import io.kotest.matchers.shouldBe
 
 class QuantityTest : FunSpec({
     test("I can create quantities") {
-        val distance: Quantity<Metres> = 5.to<Metres>()
-        val time: Quantity<Seconds> = 5.to<Seconds>()
+        val distance: Quantity<One, Metres> = 5.to()
+        val time: Quantity<One, Seconds> = 5.to()
     }
 
     test("I can add objects of the same unit") {
-        val distance: Quantity<Metres> = 5.to<Metres>()
-        (distance + distance).double shouldBe 10
+        val distance: Quantity<One, Metres> = 5.to()
+        (distance + distance) shouldBe 10.to<One, Metres>()
     }
 
     test("I can substract objects of the same unit") {
-        val distance: Quantity<Metres> = 5.to<Metres>()
-        (distance - distance).double shouldBe 0
+        val distance: Quantity<One, Metres> = 5.to()
+        (distance - distance) shouldBe 0.to()
     }
 
     test("multiplying objects multiplies it") {
-        val distance = 5.to<Metres>()
-        val area: Quantity<Mul<Metres, Metres>> = distance * distance
+        val distance = 5.to<One, Metres>()
+        val area: Quantity<Two, Metres> = distance * distance
     }
-
-    test("dividing objects divides them") {
-        val distance = 5.to<Metres>()
-        val time = 1.to<Seconds>()
-        val speed: Quantity<Div<Metres, Mul<Seconds, Seconds>>> = distance / (time * time)
-    }
-
-    test("one can raise to an integer power") {
-        val distance = 5.to<Metres>()
-        val area: Quantity<Mul<Metres, Metres>> = distance.pow(2)
-    }
-
-    test("one can raise to a double power") {
-        val distance = 5.to<Metres>()
-        val area: Quantity<Mul<Metres, Metres>> = distance.pow(2.4)
-    }
+//
+//    test("dividing objects divides them") {
+//        val distance = 5.to<One, Metres>()
+//        val time = 1.to<One, Seconds>()
+//        val acceleration: Quantity<Div<Metres, Mul<Seconds, Seconds>>> = distance / (time * time)
+//    }
 })
