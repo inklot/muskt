@@ -6,4 +6,4 @@ foojay-resolver = "0.8.0"
 kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
 [plugins]
-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.0.0" }
+jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.1.20" }
